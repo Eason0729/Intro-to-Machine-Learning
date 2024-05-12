@@ -1,0 +1,29 @@
+[package]
+name = "pyr"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "pyr"
+crate-type = ["cdylib"]
+
+[profile.release]
+strip = true
+opt-level = "s"
+lto = true
+
+[dependencies]
+smol = "2.0.0"
+log = "0.4.21"
+simple_logger = "4.3.3"
+lazy_static = "1.4.0"
+rand = "0.8.5"
+toml = "0.8.12"
+serde = {version = "1.0.198", features = ["derive"]}
+candle-core = { git = "https://github.com/huggingface/candle.git", version = "0.5.0" }
+candle-nn = { git = "https://github.com/huggingface/candle.git", version = "0.5.0" }
+
+[features]
+default = []
+cuda = ["candle-nn/cuda"]
+cudnn = ["cuda", "candle-core/cudnn"]
