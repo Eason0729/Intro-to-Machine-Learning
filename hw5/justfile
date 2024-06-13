@@ -1,0 +1,19 @@
+test:
+  just release
+  ./test.sh  
+clean:
+  rm -r output1/* output2/*
+train epoch:
+  just build
+  ./train.sh {{epoch}}
+init:
+  just build
+  MODEL_PATH="output1" ./train
+  MODEL_PATH="output2" ./train
+build:
+  cd tank-rust && cargo build --release --lib --bin tank-rust
+  cp tank-rust/target/release/tank-rust train
+  cp tank-rust/target/release/libtank_rust.so .
+release:
+  cd tank-rust && cargo build --release --lib --no-default-features
+  cp tank-rust/target/release/libtank_rust.so .
